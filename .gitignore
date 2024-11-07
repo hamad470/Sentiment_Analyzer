@@ -1,0 +1,5 @@
+# Ignore virtual environments
+myenv/
+venv/
+env/
+sentiment_analyzer

@@ -56,7 +56,7 @@
     let resElement = document.querySelector(".res");
     let data = { "message": msg };
 
-    fetch('predict', {
+    fetch('https://sentimen-analysis-293449fb2101.herokuapp.com/predict', {
         headers: {
             "Content-Type": "application/json"
         },

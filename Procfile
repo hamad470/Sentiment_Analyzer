@@ -1,3 +1,1 @@
-# Procfile
-
-web: gunicorn app:app -b 0.0.0.0:8000
+web: gunicorn app:app --log-file -

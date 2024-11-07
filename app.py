@@ -35,24 +35,8 @@ except Exception as e:
     logging.error(f"Error loading model: {e}")
     model = None
 
-# Set custom path for NLTK data and ensure required resources are downloaded
+# Set custom path for NLTK data
 nltk.data.path.append('./nltk_data')
-
-def ensure_nltk_resources():
-    """Ensure required NLTK resources are downloaded without user prompts."""
-    resources = ['punkt', 'stopwords']
-    for resource in resources:
-        try:
-            nltk.data.find(f'{resource}')
-        except LookupError:
-            try:
-                nltk.download(resource, download_dir='./nltk_data')
-                logging.info(f"Downloaded NLTK resource: {resource}")
-            except Exception as e:
-                logging.error(f"Error downloading NLTK resource {resource}: {e}")
-
-# Check and download NLTK resources
-ensure_nltk_resources()
 
 # Define the transform_text function
 def transform_text(text):
@@ -119,6 +103,5 @@ def predict():
         logging.error(f"Unexpected error in /predict: {e}")
         return jsonify({"error": str(e)}), 500
 
-# Run the app
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))

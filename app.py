@@ -39,13 +39,17 @@ except Exception as e:
 nltk.data.path.append('./nltk_data')
 
 def ensure_nltk_resources():
-    """Ensure required NLTK resources are downloaded."""
+    """Ensure required NLTK resources are downloaded without user prompts."""
     resources = ['punkt', 'stopwords']
     for resource in resources:
         try:
-            nltk.data.find(f'tokenizers/{resource}')
+            nltk.data.find(f'{resource}')
         except LookupError:
-            nltk.download(resource, download_dir='./nltk_data')
+            try:
+                nltk.download(resource, download_dir='./nltk_data')
+                logging.info(f"Downloaded NLTK resource: {resource}")
+            except Exception as e:
+                logging.error(f"Error downloading NLTK resource {resource}: {e}")
 
 # Check and download NLTK resources
 ensure_nltk_resources()

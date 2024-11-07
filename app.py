@@ -38,7 +38,7 @@ logging.basicConfig(level=logging.INFO)
 
 # Define paths to model files
 tfidf_path = os.path.join(os.path.dirname(__file__), "vectorizer.pkl")
-model_path = os.path.join(os.path.dirname(__file__), "svm_sentiment.pkl")
+model_path = os.path.join(os.path.dirname(__file__), "model.pkl")
 
 # Load the trained model, vectorizer, and selector with error handling
 try:

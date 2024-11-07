@@ -12,6 +12,26 @@ from flask_cors import CORS
 # Initialize the Flask app
 app = Flask(__name__)
 CORS(app)
+import nltk
+import os
+
+# Set custom nltk_data directory
+nltk.data.path.append('./nltk_data')
+
+# Check and download necessary NLTK data
+def ensure_nltk_resources():
+    resources = ['stopwords', 'punkt','punkt_tab']
+    for resource in resources:
+        try:
+            nltk.data.find(f'tokenizers/{resource}') if resource == 'punkt' else nltk.data.find(f'corpora/{resource}')
+        except LookupError:
+            nltk.download(resource, download_dir='./nltk_data')
+
+# Run to ensure resources are present
+try:
+    ensure_nltk_resources()
+except Exception as e:
+    print(f"Error downloading NLTK resources: {e}")
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
@@ -78,6 +98,7 @@ def predict():
         transformed_msg = transform_text(msg)
         if not transformed_msg:
             logging.error("Error during text transformation.")
+            logging.error("here is org message : ",msg)
             return jsonify({"error": "Error during text transformation."}), 500
 
         # Check if model, tfidf, and selector are loaded
